@@ -1,32 +1,37 @@
 # Python
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
 *.pyd
-*.pyc
+*.env
+.env
+.env.*
+*.sqlite3
+*.db
+
+# VSCode
+.vscode/
 
 # Entornos virtuales
 env/
 venv/
 ENV/
 .venv/
-.env/
-.env
 
-# Archivos de configuración de VS Code
-.vscode/
+# Logs
+*.log
+logs_azure_openai.txt
 
-# Archivos de bases de datos locales
-*.db
-historial_clientes.db
+# Pytest
+.pytest_cache/
+.cache/
 
-# Archivos temporales y de sistema
+# Archivos de configuración locales
+config/.env
+
+# Datos de usuario o pruebas
+data/tickets/*.txt
+
+# Otros
 .DS_Store
 Thumbs.db
-
-# Archivos de logs
-*.log
-
-# Archivos de datos sensibles o temporales
-*.xlsx
-data/

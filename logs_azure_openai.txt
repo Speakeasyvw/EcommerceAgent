@@ -1,0 +1,15 @@
+2025-06-05 21:26:37,780 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:26:40,312 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:26:40,314 INFO Tiempo de respuesta Azure OpenAI: 2.51 segundos
+2025-06-05 21:38:49,818 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:38:51,556 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:38:51,557 INFO Tiempo de respuesta Azure OpenAI: 1.72 segundos
+2025-06-05 21:38:53,243 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:38:53,246 INFO Tiempo de respuesta Azure OpenAI: 1.69 segundos
+2025-06-05 21:42:09,810 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:42:11,788 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:42:11,790 INFO Tiempo de respuesta Azure OpenAI: 1.96 segundos
+2025-06-05 21:42:13,390 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 21:42:13,391 INFO Tiempo de respuesta Azure OpenAI: 1.60 segundos
+2025-06-05 22:06:52,255 INFO HTTP Request: POST https://pruebadesafio.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview "HTTP/1.1 200 OK"
+2025-06-05 22:06:52,274 INFO Tiempo de respuesta Azure OpenAI: 2.94 segundos

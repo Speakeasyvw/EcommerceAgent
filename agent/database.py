@@ -78,6 +78,10 @@ import re
 
 def extraer_order_id(texto: str) -> str | None:
     import re
+    # Busca patrones tipo #12345
+    match = re.search(r"#(\w+)", texto)
+    if match:
+        return match.group(1)
     # Busca patrones tipo Order: 123456, Pedido: H8, SB47185, TC6353, etc.
     match = re.search(r"(?:Order|Pedido)[^\w]?[:\s]*([A-Za-z0-9\-]+)", texto, re.IGNORECASE)
     if match:
