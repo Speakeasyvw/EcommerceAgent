@@ -1,0 +1,6 @@
+Ticket B2
+From: Deborah Gosling (Deborah.benn@sky.com)
+Subject: Tracking Number Not Working
+Hi, I got a tracking number for my order, but it doesn’t show any information when I check it. Can you confirm if my package has been shipped?
+
+
