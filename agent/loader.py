@@ -31,7 +31,7 @@ def cargar_tickets_desde_txt() -> list[dict]:
             ruta_completa = os.path.join(ruta_carpeta, nombre_archivo)
             with open(ruta_completa, "r", encoding="utf-8") as archivo:
                 contenido = archivo.read().strip()
-                # Aplica el parser para mails/CRM
+                # aplica el parser para mails/CRM
                 parsed = parse_ticket_mail(contenido)
                 tickets.append({
                     "archivo": nombre_archivo,

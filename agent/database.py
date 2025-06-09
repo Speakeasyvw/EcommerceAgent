@@ -1,20 +1,27 @@
 # agent/database.py
 
 import pandas as pd
+import re
 
 # Carga única de la base
 df = pd.read_excel("data/master_flee.xlsx", sheet_name="Sheet1")
 
+df["Mail"] = df["Mail"].astype(str).str.strip().str.lower()
 # Limpiamos nombres de columnas por si tienen espacios
 df.columns = df.columns.str.strip()
+
 
 def buscar_pedido_por_id(order_id: str) -> dict | None:
     if not order_id:
         return None
-    order_id = str(order_id).strip().upper()
-    df["# Order"] = df["# Order"].astype(str).str.strip().str.upper()
-    fila = df[df["# Order"] == order_id]
+    # Deja solo los números en el order_id
+    order_id_numerico = ''.join(re.findall(r'\d+', str(order_id)))
+    df["# Order"] = df["# Order"].astype(str).str.strip()
+    print(f"Buscando order_id: '{order_id_numerico}'")
+    print("IDs disponibles:", df["# Order"].unique())
+    fila = df[df["# Order"] == order_id_numerico]
     if fila.empty:
+        print("No se encontró el pedido por ID")
         return None
     datos = fila.iloc[0]
     return {
@@ -45,10 +52,17 @@ def buscar_pedido_por_mail(mail: str) -> dict | None:
     if not mail:
         return None
     mail = mail.strip().lower()
+    # Normaliza todos los mails del dataframe a minúsculas y sin espacios
     df["Mail"] = df["Mail"].astype(str).str.strip().str.lower()
+    # Búsqueda exacta
     fila = df[df["Mail"] == mail]
     if fila.empty:
-        return None
+        # Búsqueda tolerante: ignora puntos y mayúsculas/minúsculas
+        mail_simple = mail.replace('.', '')
+        df["Mail_simple"] = df["Mail"].str.replace('.', '', regex=False)
+        fila = df[df["Mail_simple"] == mail_simple]
+        if fila.empty:
+            return None
     datos = fila.iloc[0]
     return {
         "estado_pedido": datos.get("Order Status"),
@@ -74,7 +88,6 @@ def buscar_pedido_por_mail(mail: str) -> dict | None:
         "order_sub_status": datos.get("Order Sub Status")
     }
 
-import re
 
 def extraer_order_id(texto: str) -> str | None:
     import re
@@ -97,8 +110,9 @@ def extraer_order_id(texto: str) -> str | None:
     return None
 
 def extraer_mail(texto: str) -> str | None:
-    """Extrae el primer mail que encuentre en el texto."""
+    # Busca cualquier mail en el texto y lo normaliza a minúsculas y sin espacios
     match = re.search(r'[\w\.-]+@[\w\.-]+', texto)
-    return match.group(0) if match else None
-
+    if match:
+        return match.group(0).strip().lower()
+    return None
     

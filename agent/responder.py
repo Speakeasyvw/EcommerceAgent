@@ -20,7 +20,7 @@ llm = AzureChatOpenAI(
     azure_endpoint=AZURE_ENDPOINT,
     api_version= AZURE_API_VERSION,
     temperature=0.3,  # temperatura baja para respuestas más coherentes y formales
-    max_tokens=500  # aumentar el límite de tokens en caso de necesitar respuestas más detalladas
+    max_tokens=750  # aumentar el límite de tokens en caso de necesitar respuestas más detalladas
 )
 
 prompt = ChatPromptTemplate.from_messages([
@@ -81,6 +81,19 @@ def generar_respuesta(ticket: str, info_pedido: dict, historial: list = None) ->
     start = time.time()
     respuesta = chain.invoke(payload)
     end = time.time()
-    # Logging de tiempo de respuesta
     logging.info(f"Tiempo de respuesta Azure OpenAI: {end - start:.2f} segundos")
-    return respuesta.content.strip()
+
+    # --- BLOQUE EXTRA: Forzar inclusión de datos clave ---
+    extras = []
+    if info_pedido.get("tracking") and info_pedido.get("tracking") != "-":
+        extras.append(f"Número de seguimiento: {info_pedido['tracking']}")
+    if info_pedido.get("descripcion_producto"):
+        extras.append(f"Producto: {info_pedido['descripcion_producto']}")
+    if info_pedido.get("fecha_pedido"):
+        extras.append(f"Fecha de compra: {info_pedido['fecha_pedido']}")
+    if extras:
+        respuesta_final = respuesta.content.strip() + "\n\n" + "\n".join(extras)
+    else:
+        respuesta_final = respuesta.content.strip()
+    return respuesta_final
+
