@@ -52,12 +52,12 @@ def buscar_pedido_por_mail(mail: str) -> dict | None:
     if not mail:
         return None
     mail = mail.strip().lower()
-    # Normaliza todos los mails del dataframe a minúsculas y sin espacios
+    # normaliza todos los mails del dataframe a minúsculas y sin espacios
     df["Mail"] = df["Mail"].astype(str).str.strip().str.lower()
-    # Búsqueda exacta
+    # busqueda exacta
     fila = df[df["Mail"] == mail]
     if fila.empty:
-        # Búsqueda tolerante: ignora puntos y mayúsculas/minúsculas
+        # busqueda tolerante: ignora puntos y mayúsculas/minúsculas
         mail_simple = mail.replace('.', '')
         df["Mail_simple"] = df["Mail"].str.replace('.', '', regex=False)
         fila = df[df["Mail_simple"] == mail_simple]
@@ -91,15 +91,15 @@ def buscar_pedido_por_mail(mail: str) -> dict | None:
 
 def extraer_order_id(texto: str) -> str | None:
     import re
-    # Busca patrones tipo #12345
+    # busca patrones tipo #12345
     match = re.search(r"#(\w+)", texto)
     if match:
         return match.group(1)
-    # Busca patrones tipo Order: 123456, Pedido: H8, SB47185, TC6353, etc.
+    # busca patrones tipo Order: 123456, Pedido: H8, SB47185, TC6353, etc.
     match = re.search(r"(?:Order|Pedido)[^\w]?[:\s]*([A-Za-z0-9\-]+)", texto, re.IGNORECASE)
     if match:
         return match.group(1)
-    # Solo acepta cadenas con al menos un número y no palabras comunes
+    # solo acepta cadenas con al menos un número y no palabras comunes
     posibles = re.findall(r"\b([A-Za-z0-9\-]{2,})\b", texto)
     palabras_ignoradas = {
         "ticket", "from", "subject", "hello", "please", "order", "pedido", "thanks", "thank", "was", "arrive", "the", "and", "with", "for", "that", "have", "your", "you", "can", "let", "know", "when", "should", "expect", "week", "not", "been", "updated", "tracking", "number", "isn", "t", "updating", "my", "package", "on", "in", "details"
@@ -110,7 +110,7 @@ def extraer_order_id(texto: str) -> str | None:
     return None
 
 def extraer_mail(texto: str) -> str | None:
-    # Busca cualquier mail en el texto y lo normaliza a minúsculas y sin espacios
+    # busca cualquier mail en el texto y lo normaliza a minúsculas y sin espacios
     match = re.search(r'[\w\.-]+@[\w\.-]+', texto)
     if match:
         return match.group(0).strip().lower()

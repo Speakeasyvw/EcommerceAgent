@@ -100,13 +100,13 @@ Corrección:
 }
 """
 
-# Wrapper para pasar el ticket original de forma segura
+# wrapper para pasar el ticket original de forma segura
 def tool_generar_respuesta_wrapper(input_data):
     if isinstance(input_data, str):
         input_data = input_data.strip()
         if input_data.startswith("`") and input_data.endswith("`"):
             input_data = input_data[1:-1].strip()
-        # Reemplaza saltos de línea reales por '\n'
+        # reemplaza saltos de línea reales por '\n'
         input_data = input_data.replace('\r\n', '\\n').replace('\n', '\\n')
         try:
             input_data = json.loads(input_data)
@@ -123,13 +123,6 @@ tools = [
     Tool.from_function(tool_escalar_a_humano, name="EscalarAHumano", description="Escala el caso a un humano si no puede resolverse automáticamente."),
 ]
 
-agent = initialize_agent(
-    tools,
-    llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True,
-    system_message=system_prompt
-)
 
 # --- FASTAPI ---
 app = FastAPI(
@@ -140,24 +133,31 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Cambia esto en producción
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+# inicia el agente con las herramientas y el LLM
+agent = initialize_agent(
+    tools,
+    llm,
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    verbose=True,
+    system_message=system_prompt
+)
 
 @app.post("/responder", response_model=Respuesta)
 async def responder_ticket(ticket_req: TicketRequest):
     ticket = ticket_req.ticket
     ticket = ticket.replace('\r\n', '\\n').replace('\n', '\\n').strip()
     respuesta = agent.invoke({"input": {"ticket": ticket}})
-    # Si el output es un dict y tiene "intermediate_steps", busca la última Observation
+    # si el output es un dict y tiene "intermediate_steps", busca la última Observation
     if isinstance(respuesta, dict):
-        # Busca la última Observation si existe
+        # busca la última Observation si existe
         steps = respuesta.get("intermediate_steps")
         if steps and isinstance(steps, list) and len(steps) > 0:
-            # Cada step es (AgentAction, Observation)
+            # cada step es (AgentAction, Observation)
             last_obs = steps[-1][1]
             mensaje_final = last_obs
         elif "output" in respuesta:
