@@ -38,10 +38,12 @@ Luego repetimos el paso 4
 ---
  - Recuerden poner su Api Key en un archivo .env .
  - Recuerden tambien setear sus variables de entorno en la consola de siguiente forma, reemplazando con los correspondientes valores.
+   
  $env:AZURE_API_KEY="AZURE API KEY"
  $env:AZURE_DEPLOYMENT_NAME="DEPLOYMENT NAME"
  $env:AZURE_ENDPOINT="AZURE ENDPOINT"
  $env:AZURE_API_VERSION="API VERSION"
+ 
 ---
 
 ## Uso
@@ -97,9 +99,9 @@ pytest tests/
 - Mejoras en la extracción de datos y clasificación
 - Panel de administración web
 
--- Mejora del agente con contexto sobre politicas de empresa
--- Mejora del contexto con fechas de consultas, casos mas reales
--- En caso de escalar el caso, enviar un mail/aviso a tal agente real automaticamente
+- Mejorar agente con contexto sobre politicas de empresa
+- Mejorar contexto con fechas de consultas, casos mas reales
+- En caso de escalar el caso, enviar un mail/aviso a tal agente real automaticamente
 
 ---
 Dudas o sugerencias? Porfavor abrir un issue o pull request
